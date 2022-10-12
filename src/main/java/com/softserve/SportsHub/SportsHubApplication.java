@@ -1,27 +1,25 @@
 package com.softserve.SportsHub;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
-public class SportsHubApplication implements CommandLineRunner {
-
-	@Autowired
-	UserRepository userRepository;
+@Configuration
+@ComponentScan
+public class SportsHubApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SportsHubApplication.class, args);
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SportsHubApplication.class);
+
+		Test testBean = ctx.getBean(Test.class);
+		System.out.println(testBean.getMessage());
+
 	}
 
-	public void run(String... args) {
-		User user = new User("john", false, false);
-		userRepository.save(user);
-		List<User> users = userRepository.findAll();
-		users.forEach(System.out::println);
+	@Bean
+	public String giveMeString(){
+		return "Hello";
 	}
-
 }
