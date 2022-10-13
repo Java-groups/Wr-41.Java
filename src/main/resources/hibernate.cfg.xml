@@ -9,8 +9,8 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">password</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sportshubdb</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sportshub</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
 
         <property name="hibernate.c3p0.min_size">5</property>
@@ -18,5 +18,7 @@
         <property name="hibernate.c3p0.acquire_increment">2</property>
         <property name="hibernate.c3p0.timeout">1800</property>
         <property name="hibernate.c3p0.max_statements">150</property>
+        <property name="packagesToScan">com.softserve.SportsHub</property>
+        <mapping class="com.softserve.SportsHub.comment.Comment" />
     </session-factory>
 </hibernate-configuration>

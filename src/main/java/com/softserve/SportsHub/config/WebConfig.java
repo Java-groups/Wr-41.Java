@@ -1,4 +1,4 @@
-package com.softserve.SportsHub;
+package com.softserve.SportsHub.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan
+@ComponentScan(basePackages = "com.softserve.SportsHub")
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
