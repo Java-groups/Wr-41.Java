@@ -1,4 +1,4 @@
-package com.softserve.SportsHub.comment;
+package com.softserve.sportshub.comment;
 
 import lombok.Getter;
 

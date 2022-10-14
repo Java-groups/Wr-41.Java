@@ -1,4 +1,4 @@
-package com.softserve.SportsHub;
+package com.softserve.sportshub;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

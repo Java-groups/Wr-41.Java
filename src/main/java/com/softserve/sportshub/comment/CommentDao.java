@@ -1,9 +1,8 @@
-package com.softserve.SportsHub.comment;
+package com.softserve.sportshub.comment;
 
 import java.util.List;
 
-public interface CommentService {
+interface CommentDao {
     void save(Comment comment);
-
     List<Comment> list();
 }

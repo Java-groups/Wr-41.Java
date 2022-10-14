@@ -1,4 +1,4 @@
-package com.softserve.SportsHub.config;
+package com.softserve.sportshub.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

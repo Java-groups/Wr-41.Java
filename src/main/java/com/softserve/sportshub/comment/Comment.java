@@ -1,12 +1,10 @@
-package com.softserve.SportsHub.comment;
+package com.softserve.sportshub.comment;
 
 import lombok.Getter;
 import lombok.Setter;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
 
 
 @Entity
