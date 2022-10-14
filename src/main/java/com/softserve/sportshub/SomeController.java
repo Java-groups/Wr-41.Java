@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SomeController {
 
+
     public SomeController() {
         System.out.println("<---rest controller is called--->");
     }
@@ -20,4 +21,5 @@ public class SomeController {
 
     @GetMapping("/hi")
     public String anotherOne() { return "how are you"; }
+
 }
