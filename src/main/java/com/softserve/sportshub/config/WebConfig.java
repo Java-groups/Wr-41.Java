@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan(basePackages = "com.softserve.SportsHub")
+@ComponentScan("com.softserve.sportshub")
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
