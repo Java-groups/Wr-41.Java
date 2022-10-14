@@ -1,4 +1,4 @@
-package com.softserve.SportsHub;
+package com.softserve.sportshub.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
