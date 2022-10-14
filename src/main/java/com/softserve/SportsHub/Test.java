@@ -20,4 +20,7 @@ public class Test {
     public Test(String message) {
         this.message = message;
     }
+
+    public Test() {
+    }
 }

@@ -1,5 +1,6 @@
-package com.softserve.SportsHub;
+package com.softserve.SportsHub.config;
 
+import com.softserve.SportsHub.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends
@@ -7,7 +8,7 @@ public class AppInitializer extends
  
    @Override
    protected Class<?>[] getRootConfigClasses() {
-      return new Class[]{};
+      return new Class[]{HibernateConfig.class};
    }
  
    @Override

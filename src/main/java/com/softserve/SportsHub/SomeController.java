@@ -1,25 +1,24 @@
 package com.softserve.SportsHub;
 
-import org.springframework.stereotype.Controller;
+import com.softserve.SportsHub.user.User;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SomeController {
 
     public SomeController() {
-        System.out.println("<---rest controller is called--->");
+        System.out.println("SOME CONTROLLER CONTRUCTOR");
     }
 
-    @GetMapping("/justhello")
+    @GetMapping("hello")
     public String test(){
         return "Hello";
     }
 
-    @GetMapping("/")
-    public String smthElse() { return "not this"; }
-
-    @GetMapping("/hi")
-    public String anotherOne() { return "how are you"; }
+    @GetMapping
+    public User getUser(){
+        User user = new User("KArol", true, false);
+        return user;
+    }
 }

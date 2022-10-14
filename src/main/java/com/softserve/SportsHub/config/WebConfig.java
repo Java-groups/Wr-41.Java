@@ -1,10 +1,12 @@
-package com.softserve.SportsHub;
+package com.softserve.SportsHub.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -14,11 +16,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import javax.persistence.EntityManagerFactory;
+
 @EnableWebMvc
-@ComponentScan
+@ComponentScan(basePackages = {"com.softserve.SportsHub", "com.softserve.SportsHub.user"})
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
+//, entityManagerFactoryRef="emf"
     @Bean
     public InternalResourceViewResolver resolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
@@ -35,5 +39,10 @@ public class WebConfig implements WebMvcConfigurer {
         return source;
     }
 
-
+//    @Override
+//    public Validator getValidator() {
+//        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+//        validator.setValidationMessageSource(messageSource());
+//        return validator;
+//    }
 }
