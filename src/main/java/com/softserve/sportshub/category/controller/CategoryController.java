@@ -1,11 +1,13 @@
 package com.softserve.sportshub.category.controller;
 
+import com.softserve.sportshub.category.command.AddSubcategoryCommand;
 import com.softserve.sportshub.category.command.CreateCategoryCommand;
 import com.softserve.sportshub.category.command.EditCategoryCommand;
 import com.softserve.sportshub.category.dto.CategoryDto;
 import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryService;
 import com.softserve.sportshub.status.StatusDto;
+import com.softserve.sportshub.subcategory.model.Subcategory;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,14 @@ public class CategoryController {
         Category categoryToUpdate = categoryService.getById(command.getId());
         categoryToUpdate.setName(command.getName());
         return ResponseEntity.ok(mapper.map(categoryToUpdate, CategoryDto.class));
+    }
+
+    @PutMapping("/add-subcategory")
+    public ResponseEntity<StatusDto> addSubcategory(AddSubcategoryCommand command) {
+        Category category = categoryService.getById(command.getIdOfCategory());
+        category.addSubcategory(new Subcategory("Example subcategory", category));
+        categoryService.update(category);
+        return ResponseEntity.ok(new StatusDto("Subcategory addded succesfully!"));
     }
 
     @DeleteMapping(value = "/{id}")

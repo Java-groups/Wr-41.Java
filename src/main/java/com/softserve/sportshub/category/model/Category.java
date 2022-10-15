@@ -35,4 +35,8 @@ public class Category {
         this.name = name;
     }
 
+    public void addSubcategory(Subcategory subcategory) {
+        subcategories.add(subcategory);
+    }
+
 }

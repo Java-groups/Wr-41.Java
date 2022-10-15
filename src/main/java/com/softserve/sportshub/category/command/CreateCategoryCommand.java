@@ -10,7 +10,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateCategoryCommand {
-
     private String name;
-
 }
