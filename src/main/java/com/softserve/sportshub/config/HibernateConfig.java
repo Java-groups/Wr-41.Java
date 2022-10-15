@@ -1,6 +1,7 @@
 package com.softserve.sportshub.config;
 
 import com.softserve.sportshub.User;
+import com.softserve.sportshub.category.model.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ public class HibernateConfig {
     LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
     factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
     factoryBean.setAnnotatedClasses(User.class);
+    factoryBean.setAnnotatedClasses(Category.class);
     return factoryBean;
   }
  
