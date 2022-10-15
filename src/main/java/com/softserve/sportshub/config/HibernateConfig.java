@@ -3,6 +3,7 @@ package com.softserve.sportshub.config;
 import com.softserve.sportshub.article.domain.Article;
 import com.softserve.sportshub.role.Role;
 import com.softserve.sportshub.user.User;
+import com.softserve.sportshub.category.model.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
