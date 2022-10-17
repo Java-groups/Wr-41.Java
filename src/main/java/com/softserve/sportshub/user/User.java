@@ -30,10 +30,4 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-    public User(String username, String password, boolean isBlocked, boolean isSubscriber) {
-        this.username = username;
-        this.password = password;
-        this.isBlocked = isBlocked;
-        this.isSubscriber = isSubscriber;
-    }
 }

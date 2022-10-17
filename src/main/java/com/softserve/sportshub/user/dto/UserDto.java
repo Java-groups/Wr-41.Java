@@ -1,11 +1,15 @@
 package com.softserve.sportshub.user.dto;
 
 import com.softserve.sportshub.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     private Long id;
     private String username;

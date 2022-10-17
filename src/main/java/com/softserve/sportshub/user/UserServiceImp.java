@@ -5,18 +5,18 @@ import com.softserve.sportshub.role.RoleDao;
 import com.softserve.sportshub.user.dto.UserDto;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service @Transactional
 public class UserServiceImp implements UserService, UserDetailsService {
@@ -35,13 +35,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
    @Override
    public UserDto save(UserDto userDto) {
       User user = UserDto.mapUserDtoToUser(userDto);
-      // DB might have no USER role saved
-      try {
-         roleDao.findByName(USER_ROLE);
-      } catch (Exception e){
-         System.out.println("No USER role found id db, creating new");
-         roleDao.save(new Role(USER_ROLE));
-      }
       Role role = roleDao.findByName(USER_ROLE);
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       user.getRoles().add(role);
@@ -56,15 +49,33 @@ public class UserServiceImp implements UserService, UserDetailsService {
    }
 
    @Override
-   public UserDto findUserByUsername(String username) {
-      return UserDto.mapUserToDto(userDao.findByUsername(username));
+   public User getCurrentUser() throws UserPrincipalNotFoundException {
+      String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      try {
+         return userDao.findByUsername(username);
+      } catch (Exception e){
+         throw new UserPrincipalNotFoundException(e.getMessage());
+      }
    }
+
 
    @Override
    public void addRoleToUser(String username, String roleName) {
       User user = userDao.findByUsername(username);
       Role role = roleDao.findByName(roleName);
       user.getRoles().add(role);
+   }
+
+   @Override
+   public UserDto changeUserPassword(String currentPassword, String newPassword, String newPasswordRepeat) throws Exception {
+      if(!newPassword.equals(newPasswordRepeat)){
+         throw new Exception("Passwords must be the same!");
+      }
+      User user = getCurrentUser();
+      if(passwordEncoder.matches(currentPassword, user.getPassword())){
+         user.setPassword(passwordEncoder.encode(newPassword));
+      }
+      return UserDto.mapUserToDto(user);
    }
 
    @Override

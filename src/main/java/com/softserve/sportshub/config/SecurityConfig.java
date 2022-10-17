@@ -40,6 +40,7 @@ public class SecurityConfig {
                 //TODO: change authority to ADMIN, USER is for testing purposes
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("USER")
                 .antMatchers("/login").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/users/me").hasAuthority("USER")
                 .antMatchers("/").permitAll()
                 .anyRequest().permitAll()
         );
