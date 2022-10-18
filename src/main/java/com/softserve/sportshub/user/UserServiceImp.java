@@ -3,15 +3,16 @@ package com.softserve.sportshub.user;
 import com.softserve.sportshub.role.Role;
 import com.softserve.sportshub.role.RoleDao;
 import com.softserve.sportshub.user.dto.UserDto;
+import com.softserve.sportshub.utils.JwtUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,6 +65,18 @@ public class UserServiceImp implements UserService, UserDetailsService {
       User user = userDao.findByUsername(username);
       Role role = roleDao.findByName(roleName);
       user.getRoles().add(role);
+   }
+
+   @Override
+   public User changeUserPassword(String username, String currentPassword, String newPassword, String newPasswordRepeat) throws Exception {
+      if(!newPassword.equals(newPasswordRepeat)){
+         throw new Exception("Passwords must be the same!");
+      }
+      User user = userDao.findByUsername(username);
+      if(passwordEncoder.matches(currentPassword, user.getPassword())){
+         user.setPassword(passwordEncoder.encode(newPassword));
+      }
+      return user;
    }
 
    @Override

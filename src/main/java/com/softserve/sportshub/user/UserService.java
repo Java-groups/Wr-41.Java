@@ -9,4 +9,6 @@ public interface UserService {
    List<UserDto> getAllUsers();
    UserDto findUserByUsername(String username);
    void addRoleToUser(String username, String roleName);
+   User changeUserPassword(String username, String currentPassword, String newPassword, String newPasswordRepeat) throws Exception;
+
 }

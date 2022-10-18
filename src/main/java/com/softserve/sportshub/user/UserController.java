@@ -3,10 +3,13 @@ package com.softserve.sportshub.user;
 import com.softserve.sportshub.role.Role;
 import com.softserve.sportshub.role.RoleService;
 import com.softserve.sportshub.user.dto.UserDto;
+import com.softserve.sportshub.user.dto.UserPasswordDto;
+import com.softserve.sportshub.utils.JwtUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -46,5 +49,16 @@ public class UserController {
             .buildAndExpand(savedUser.getId())
             .toUri();
     return ResponseEntity.created(savedEntityLocation).body(savedUser);
+  }
+
+  @PatchMapping("/users/me")
+  public ResponseEntity<UserDto> updatePassword(HttpServletRequest request, @RequestBody UserPasswordDto passwordDto) throws Exception {
+    String username = JwtUtils.getUsernameFromTokenInsideRequest(request);
+    User user = userService.changeUserPassword(
+            username,
+            passwordDto.getPassword(),
+            passwordDto.getNewPassword(),
+            passwordDto.getNewPasswordRepeat());
+    return ResponseEntity.ok().body(UserDto.mapUserToDto(user));
   }
 }
