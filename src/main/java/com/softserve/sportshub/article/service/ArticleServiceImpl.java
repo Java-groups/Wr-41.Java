@@ -7,13 +7,12 @@ import com.softserve.sportshub.article.dto.ArticleDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleDao articleDao;
 
@@ -33,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto save(CreateArticleCommand command) {
+        System.out.println("\n\n Weszlo w safe \n");
         Article article= new Article(
                 Language.valueOf(command.getLanguage()),
                 command.getPic(),

@@ -1,7 +1,7 @@
 package com.softserve.sportshub.article.service;
 
 import com.softserve.sportshub.article.dto.ArticleDto;
-import lombok.Value;
+import lombok.Data;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface ArticleService {
     ArticleDto save(CreateArticleCommand article);
     void delete(Long id);
 
-    @Value
+    @Data
     class CreateArticleCommand{
         String language;
         String pic;
