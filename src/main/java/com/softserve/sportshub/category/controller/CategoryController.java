@@ -6,6 +6,7 @@ import com.softserve.sportshub.category.dto.CategoryDto;
 import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryService;
 import com.softserve.sportshub.status.StatusDto;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
 
-    @Autowired
-    private ModelMapper mapper;
+    private final CategoryService categoryService;
+    private final ModelMapper mapper;
 
     @GetMapping
     public ResponseEntity<List<Category>> getAll() {
@@ -45,13 +45,15 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<StatusDto> add(@RequestBody CreateCategoryCommand command) {
         categoryService.save(new Category(command.getName()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDto("Category created successfully!"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDto("Category '" + command.getName() +
+                "' was created successfully!"));
     }
 
     @PutMapping
     public ResponseEntity<CategoryDto> edit(@RequestBody EditCategoryCommand command) {
-        Category updatedCategory = categoryService.update(new Category(command.getName()));
-        return ResponseEntity.ok(mapper.map(updatedCategory, CategoryDto.class));
+        Category categoryToUpdate = categoryService.getById(command.getId());
+        categoryToUpdate.setName(command.getName());
+        return ResponseEntity.ok(mapper.map(categoryToUpdate, CategoryDto.class));
     }
 
     @DeleteMapping(value = "/{id}")

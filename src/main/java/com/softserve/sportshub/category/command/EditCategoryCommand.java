@@ -10,5 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EditCategoryCommand {
+
+    private long id;
+
     private String name;
+
 }
