@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("USER")
                 .antMatchers("/login").permitAll()
                 .antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()//authenticated()
         );
 
         final AuthenticationConfiguration configuration = http.getSharedObject(AuthenticationConfiguration.class);

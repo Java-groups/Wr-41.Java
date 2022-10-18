@@ -25,4 +25,10 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> list() {
         return categoryDao.list();
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Category show(long id) {
+       return categoryDao.show(id);
+    }
 }

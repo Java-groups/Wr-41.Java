@@ -20,9 +20,13 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<Category>> getAll() {
-        Category category = new Category("NBA");
-        categoryService.save(category);
         return ResponseEntity.ok(categoryService.list());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryDto> getSingle(@PathVariable(name = "id") long id) {
+        Category category = categoryService.show(id);
+        return ResponseEntity.ok(new CategoryDto(category.getName()));
     }
 
     @PostMapping
