@@ -1,4 +1,4 @@
-package com.softserve.sportshub.category.dto;
+package com.softserve.sportshub.status;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryDto {
-
-    private long id;
-
-    private String name;
+public class StatusDto {
+    private String status;
 }

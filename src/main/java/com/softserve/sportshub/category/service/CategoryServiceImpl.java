@@ -14,21 +14,40 @@ public class CategoryServiceImpl implements CategoryService{
 
     private final CategoryDao categoryDao;
 
+    @Transactional(readOnly = true)
+    @Override
+    public Category getById(long id) {
+        return categoryDao.getById(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Category> getAll() {
+        return categoryDao.getAll();
+    }
+
     @Transactional
     @Override
     public void save(Category category) {
         categoryDao.save(category);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
-    public List<Category> list() {
-        return categoryDao.list();
+    public Category update(Category category) {
+        return categoryDao.update(category);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
-    public Category show(long id) {
-       return categoryDao.show(id);
+    public void delete(Category category) {
+        categoryDao.delete(category);
     }
+
+    @Transactional
+    @Override
+    public void deleteById(long id) {
+        categoryDao.deleteById(id);
+    }
+
 }
