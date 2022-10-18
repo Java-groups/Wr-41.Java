@@ -6,18 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateArticleCommand {
-    String language;
-    String pic;
-    String alternativePic;
-    String headline;
-    String caption;
-    String content;
-    Boolean showComments;
-    Category category;
-    Boolean isPublished;
+public class UpdateArticleCategoryCommand {
+
+    private Category category;
 }

@@ -1,5 +1,6 @@
 package com.softserve.sportshub.article.domain;
 
+import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.comment.Comment;
 import com.softserve.sportshub.user.User;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Article {
     private String caption;
     private String content;
     private Boolean showComments;
+    private Boolean isPublished;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "article_id")
@@ -36,6 +38,9 @@ public class Article {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Category category;
 
     public Article(Language language, String pic, String alternativePic, String headline, String caption, String content, Boolean showComments) {
         this.language = language;
@@ -45,6 +50,8 @@ public class Article {
         this.caption = caption;
         this.content = content;
         this.showComments = showComments;
+        this.category = category;
+        this.isPublished = isPublished;
     }
 
     public Article(Long id, Language language, String pic, String alternativePic, String headline, String caption, String content, Boolean showComments) {

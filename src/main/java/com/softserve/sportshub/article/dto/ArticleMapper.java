@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ArticleMapper {
+
     public ArticleDto toDto(Article article) {
         return new ArticleDto(
                 article.getId(),
@@ -15,6 +16,9 @@ public class ArticleMapper {
                 article.getHeadline(),
                 article.getCaption(),
                 article.getContent(),
+                article.getShowComments(),
+                article.getCategory(),
+                article.getIsPublished()
                 article.getShowComments()
         );
     }
@@ -27,7 +31,9 @@ public class ArticleMapper {
                 command.getHeadline(),
                 command.getCaption(),
                 command.getContent(),
-                command.getShowComments()
+                command.getShowComments(),
+                command.getCategory(),
+                command.getIsPublished()
         );
     }
 }
