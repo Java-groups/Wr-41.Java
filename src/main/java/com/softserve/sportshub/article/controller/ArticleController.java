@@ -21,20 +21,20 @@ public class ArticleController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<ArticleDto> findALl(){
+    public List<ArticleDto> findALl() {
         return service.getAllArticles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleDto> getById(@PathVariable Long id){
+    public ResponseEntity<ArticleDto> getById(@PathVariable Long id) {
         ArticleDto articleDto = service.FindById(id);
         return ResponseEntity.ok(articleDto);
     }
 
     @PostMapping
-    public ResponseEntity<ArticleDto> addArticle(@RequestBody CreateArticleCommand command){
+    public ResponseEntity<ArticleDto> addArticle(@RequestBody CreateArticleCommand command) {
         ArticleDto articleDto = service.save(command);
-        URI uri= ServletUriComponentsBuilder.fromCurrentRequestUri().path("/articles/" + articleDto.getId()).build().toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/articles/" + articleDto.getId()).build().toUri();
         return ResponseEntity.created(uri).build();
     }
 }
