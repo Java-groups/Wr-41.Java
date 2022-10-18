@@ -37,4 +37,10 @@ public class ArticleController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/articles/" + articleDto.getId()).build().toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteArticle(@PathVariable Long id){
+        service.delete(id);
+    }
 }
