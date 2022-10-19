@@ -54,11 +54,18 @@ public class UserController {
   @PatchMapping("/users/me")
   public ResponseEntity<UserDto> updatePassword(HttpServletRequest request, @RequestBody UserPasswordDto passwordDto) throws Exception {
     String username = JwtUtils.getUsernameFromTokenInsideRequest(request);
-    User user = userService.changeUserPassword(
+    UserDto user = userService.changeUserPassword(
             username,
             passwordDto.getPassword(),
             passwordDto.getNewPassword(),
             passwordDto.getNewPasswordRepeat());
-    return ResponseEntity.ok().body(UserDto.mapUserToDto(user));
+    return ResponseEntity.ok().body(user);
+  }
+
+  @GetMapping("/users/me")
+  public ResponseEntity<UserDto> getUserProfile(HttpServletRequest request) throws Exception {
+    String username = JwtUtils.getUsernameFromTokenInsideRequest(request);
+    UserDto userByUsername = userService.findUserByUsername(username);
+    return ResponseEntity.ok().body(userByUsername);
   }
 }
