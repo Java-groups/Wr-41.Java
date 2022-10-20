@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -37,6 +38,19 @@ public class Category {
 
     public void addSubcategory(Subcategory subcategory) {
         subcategories.add(subcategory);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return id == category.id && Objects.equals(name, category.name) && Objects.equals(subcategories, category.subcategories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, subcategories);
     }
 
 }
