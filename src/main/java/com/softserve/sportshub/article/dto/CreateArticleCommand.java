@@ -1,6 +1,5 @@
 package com.softserve.sportshub.article.dto;
 
-import com.softserve.sportshub.category.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class CreateArticleCommand {
     String headline;
     String caption;
     String content;
+    Long categoryId;
     Boolean showComments;
-    Category category;
     Boolean isPublished;
 }

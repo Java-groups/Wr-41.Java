@@ -32,7 +32,6 @@ public class ArticleMapper {
                 .caption(command.getCaption())
                 .content(command.getContent())
                 .showComments(command.getShowComments())
-                .category(command.getCategory())
                 .isPublished(command.getIsPublished())
                 .build();
     }
