@@ -34,6 +34,10 @@ public class Subcategory {
         this.category = category;
     }
 
+    public Subcategory(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

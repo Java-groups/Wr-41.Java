@@ -1,6 +1,6 @@
 package com.softserve.sportshub.subcategory.service;
 
-import com.softserve.sportshub.category.model.Category;
+import com.softserve.sportshub.subcategory.command.EditSubcategoryCommand;
 import com.softserve.sportshub.subcategory.dao.SubcategoryDao;
 import com.softserve.sportshub.subcategory.dto.SubcategoryDto;
 import com.softserve.sportshub.subcategory.model.Subcategory;
@@ -19,9 +19,15 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     @Transactional(readOnly = true)
     @Override
-    public SubcategoryDto getById(long id) {
+    public SubcategoryDto getDtoById(long id) {
         Subcategory subcategory = subcategoryDao.getById(id);
         return new SubcategoryDto(subcategory.getName());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Subcategory getEntityById(long id) {
+        return subcategoryDao.getById(id);
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +44,10 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     @Transactional
     @Override
-    public Subcategory update(Subcategory subcategory) {
+    public Subcategory update(EditSubcategoryCommand command) {
+        Subcategory subcategory = getEntityById(command.getId());
+        subcategory.setName(command.getName());
+        subcategory.setCategory(subcategory.getCategory());
         return subcategoryDao.update(subcategory);
     }
 

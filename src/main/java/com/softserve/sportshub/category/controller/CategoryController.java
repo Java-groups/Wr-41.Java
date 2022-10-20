@@ -66,7 +66,7 @@ public class CategoryController {
         return ResponseEntity.ok(new StatusDto("Subcategory addded succesfully!"));
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<StatusDto> delete(@PathVariable(name = "id") long id) {
         categoryService.deleteById(id);
         return ResponseEntity.ok(new StatusDto("Category was removed successfully!"));
