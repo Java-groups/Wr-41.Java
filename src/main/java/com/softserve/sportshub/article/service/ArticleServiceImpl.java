@@ -2,8 +2,9 @@ package com.softserve.sportshub.article.service;
 
 import com.softserve.sportshub.article.dao.ArticleDao;
 import com.softserve.sportshub.article.domain.Article;
-import com.softserve.sportshub.article.domain.Language;
 import com.softserve.sportshub.article.dto.ArticleDto;
+import com.softserve.sportshub.article.dto.ArticleMapper;
+import com.softserve.sportshub.article.dto.CreateArticleCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,34 +16,26 @@ import java.util.List;
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleDao articleDao;
+    private final ArticleMapper articleMapper;
 
     @Override
-    public ArticleDto FindById(Long id) {
+    public ArticleDto findById(Long id) {
         Article article = articleDao.findOne(id);
-        return ArticleDto.mapArticleToDto(article);
+        return articleMapper.toDto(article);
     }
 
     @Override
     public List<ArticleDto> getAllArticles() {
         return articleDao.findAll()
                 .stream()
-                .map(ArticleDto::mapArticleToDto)
+                .map(articleMapper::toDto)
                 .toList();
     }
 
     @Override
     public ArticleDto save(CreateArticleCommand command) {
-        System.out.println("\n\n Weszlo w safe \n");
-        Article article= new Article(
-                Language.valueOf(command.getLanguage()),
-                command.getPic(),
-                command.getAlternativePic(),
-                command.getHeadline(),
-                command.getCaption(),
-                command.getContent(),
-                command.getShowComments()
-        );
-        return ArticleDto.mapArticleToDto(articleDao.save(article));
+        Article article = articleMapper.toArticle(command);
+        return articleMapper.toDto(articleDao.save(article));
     }
 
     @Override

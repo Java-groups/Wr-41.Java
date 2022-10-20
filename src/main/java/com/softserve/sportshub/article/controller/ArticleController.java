@@ -1,6 +1,7 @@
 package com.softserve.sportshub.article.controller;
 
 import com.softserve.sportshub.article.dto.ArticleDto;
+import com.softserve.sportshub.article.dto.CreateArticleCommand;
 import com.softserve.sportshub.article.service.ArticleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -10,8 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-
-import static com.softserve.sportshub.article.service.ArticleService.CreateArticleCommand;
 
 @RestController
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDto> getById(@PathVariable Long id) {
-        ArticleDto articleDto = service.FindById(id);
+        ArticleDto articleDto = service.findById(id);
         return ResponseEntity.ok(articleDto);
     }
 

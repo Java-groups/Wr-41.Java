@@ -1,10 +1,12 @@
 package com.softserve.sportshub.article.dto;
 
-import lombok.Value;
+import lombok.*;
 
-@Value
-public class ArticleDto {
-    Long id;
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CreateArticleCommand{
     String language;
     String pic;
     String alternativePic;
