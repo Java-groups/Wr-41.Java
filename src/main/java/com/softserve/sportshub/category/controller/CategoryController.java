@@ -8,9 +8,8 @@ import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryService;
 import com.softserve.sportshub.status.StatusDto;
 import com.softserve.sportshub.subcategory.model.Subcategory;
+import com.softserve.sportshub.subcategory.service.SubcategoryService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,40 +28,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
 
-
     private final CategoryService categoryService;
-    private final ModelMapper mapper;
+    private final SubcategoryService subcategoryService;
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAll() {
+    public ResponseEntity<List<CategoryDto>> getAll() {
         return ResponseEntity.ok(categoryService.getAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> getSingle(@PathVariable(name = "id") long id) {
-        Category category = categoryService.getById(id);
-        return ResponseEntity.ok(mapper.map(category, CategoryDto.class));
+        CategoryDto categoryDto = categoryService.getDtoById(id);
+        return ResponseEntity.ok(categoryDto);
     }
 
     @PostMapping
     public ResponseEntity<StatusDto> add(@RequestBody CreateCategoryCommand command) {
         categoryService.save(new Category(command.getName()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDto("Category '" + command.getName() +
-                "' was created successfully!"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new StatusDto("Category was created successfully!"));
     }
 
     @PutMapping
-    public ResponseEntity<CategoryDto> edit(@RequestBody EditCategoryCommand command) {
-        Category categoryToUpdate = categoryService.getById(command.getId());
-        categoryToUpdate.setName(command.getName());
-        return ResponseEntity.ok(mapper.map(categoryToUpdate, CategoryDto.class));
+    public ResponseEntity<StatusDto> edit(@RequestBody EditCategoryCommand command) {
+        categoryService.update(command);
+        return ResponseEntity.ok(new StatusDto("Category updatd succesfully!"));
     }
 
     @PutMapping("/add-subcategory")
     public ResponseEntity<StatusDto> addSubcategory(@RequestBody AddSubcategoryCommand command) {
-        Category category = categoryService.getById(command.getIdOfCategory());
-        category.addSubcategory(new Subcategory("Example subcategory", category));
-        categoryService.update(category);
+        categoryService.addSubcategory(command);
         return ResponseEntity.ok(new StatusDto("Subcategory addded succesfully!"));
     }
 

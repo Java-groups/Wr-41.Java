@@ -3,7 +3,6 @@ package com.softserve.sportshub.category.dao;
 import com.softserve.sportshub.category.model.Category;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -17,7 +16,7 @@ public class CategoryDaoImpl implements CategoryDao{
 
     @Override
     public Category getById(long id) {
-        return sessionFactory.getCurrentSession().get(Category.class, id);
+         return sessionFactory.getCurrentSession().get(Category.class, id);
     }
 
     @Override

@@ -1,17 +1,24 @@
 package com.softserve.sportshub.category.service;
 
+import com.softserve.sportshub.category.command.AddSubcategoryCommand;
+import com.softserve.sportshub.category.command.EditCategoryCommand;
+import com.softserve.sportshub.category.dto.CategoryDto;
 import com.softserve.sportshub.category.model.Category;
 
 import java.util.List;
 
 public interface CategoryService {
-    Category getById(long id);
+    CategoryDto getDtoById(long id);
 
-    List<Category> getAll();
+    Category getEntityById(long id);
+
+    List<CategoryDto> getAll();
 
     void save(Category category);
 
-    Category update(Category category);
+    Category update(EditCategoryCommand command);
+
+    void addSubcategory(AddSubcategoryCommand command);
 
     void delete(Category category);
 
