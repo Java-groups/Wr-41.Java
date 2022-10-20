@@ -3,11 +3,12 @@ package com.softserve.sportshub.user;
 import com.softserve.sportshub.role.Role;
 import com.softserve.sportshub.role.RoleService;
 import com.softserve.sportshub.user.dto.UserDto;
+import com.softserve.sportshub.user.dto.UserPasswordDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @RestController
@@ -46,5 +47,20 @@ public class UserController {
             .buildAndExpand(savedUser.getId())
             .toUri();
     return ResponseEntity.created(savedEntityLocation).body(savedUser);
+  }
+
+  @PatchMapping("/users/me")
+  public ResponseEntity<UserDto> updatePassword(@RequestBody UserPasswordDto passwordDto) throws Exception {
+    UserDto user = userService.changeUserPassword(
+            passwordDto.getPassword(),
+            passwordDto.getNewPassword(),
+            passwordDto.getNewPasswordRepeat());
+    return ResponseEntity.ok().body(user);
+  }
+
+  @GetMapping("/users/me")
+  public ResponseEntity<UserDto> getUserProfile() throws UserPrincipalNotFoundException {
+    User userFromContext = userService.getCurrentUser();
+    return ResponseEntity.ok().body(UserDto.mapUserToDto(userFromContext));
   }
 }
