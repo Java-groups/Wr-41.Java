@@ -1,6 +1,5 @@
 package com.softserve.sportshub.subcategory.dao;
 
-import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.subcategory.model.Subcategory;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -14,7 +13,6 @@ import java.util.List;
 public class SubcategoryDaoImpl implements SubcategoryDao {
 
     private final SessionFactory sessionFactory;
-
 
     @Override
     public Subcategory getById(long id) {
@@ -48,4 +46,5 @@ public class SubcategoryDaoImpl implements SubcategoryDao {
         Subcategory subcategory = getById(id);
         delete(subcategory);
     }
+
 }

@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService{
         categoryDao.delete(category);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public void deleteById(long id) {
         categoryDao.deleteById(id);
