@@ -7,8 +7,6 @@ import com.softserve.sportshub.category.dto.CategoryDto;
 import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryService;
 import com.softserve.sportshub.status.StatusDto;
-import com.softserve.sportshub.subcategory.model.Subcategory;
-import com.softserve.sportshub.subcategory.service.SubcategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,13 +48,13 @@ public class CategoryController {
     @PutMapping
     public ResponseEntity<StatusDto> edit(@RequestBody EditCategoryCommand command) {
         categoryService.update(command);
-        return ResponseEntity.ok(new StatusDto("Category updatd succesfully!"));
+        return ResponseEntity.ok(new StatusDto("Category updated successfully!"));
     }
 
     @PutMapping("/add-subcategory")
     public ResponseEntity<StatusDto> addSubcategory(@RequestBody AddSubcategoryCommand command) {
         categoryService.addSubcategory(command);
-        return ResponseEntity.ok(new StatusDto("Subcategory addded succesfully!"));
+        return ResponseEntity.ok(new StatusDto("Subcategory added successfully!"));
     }
 
     @DeleteMapping("/{id}")
