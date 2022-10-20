@@ -1,5 +1,6 @@
 package com.softserve.sportshub.article.service;
 
+import com.softserve.sportshub.article.dto.UpdateArticleCategoryCommand;
 import com.softserve.sportshub.article.dao.ArticleDao;
 import com.softserve.sportshub.article.domain.Article;
 import com.softserve.sportshub.article.dto.ArticleDto;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Transactional
-public class ArticleServiceImpl implements ArticleService {
+class ArticleServiceImpl implements ArticleService {
     private final ArticleDao articleDao;
     private final ArticleMapper articleMapper;
 
@@ -36,6 +37,37 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleDto save(CreateArticleCommand command) {
         Article article = articleMapper.toArticle(command);
         return articleMapper.toDto(articleDao.save(article));
+    }
+
+    @Override
+    public void updateCategory(Long id, UpdateArticleCategoryCommand command) {
+        Article article = articleDao.findOne(id);
+        article.getCategory().setName(command.getCategory().getName());
+    }
+
+    @Override
+    public void turnOffComments(Long id) {
+        Article article = articleDao.findOne(id);
+        article.setShowComments(false);
+    }
+
+    @Override
+    public void turnOnComments(Long id) {
+        Article article = articleDao.findOne(id);
+        article.setShowComments(true);
+    }
+
+    @Override
+    public void publish(Long id) {
+        Article article = articleDao.findOne(id);
+        article.setIsPublished(true);
+
+    }
+
+    @Override
+    public void unpublish(Long id) {
+        Article article = articleDao.findOne(id);
+        article.setIsPublished(false);
     }
 
     @Override

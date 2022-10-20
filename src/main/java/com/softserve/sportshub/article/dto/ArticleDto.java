@@ -1,5 +1,6 @@
 package com.softserve.sportshub.article.dto;
 
+import com.softserve.sportshub.category.model.Category;
 import lombok.Value;
 
 @Value
@@ -12,4 +13,6 @@ public class ArticleDto {
     String caption;
     String content;
     Boolean showComments;
+    Category category;
+    Boolean isPublished;
 }

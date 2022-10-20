@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ArticleMapper {
+
     public ArticleDto toDto(Article article) {
         return new ArticleDto(
                 article.getId(),
@@ -15,19 +16,24 @@ public class ArticleMapper {
                 article.getHeadline(),
                 article.getCaption(),
                 article.getContent(),
-                article.getShowComments()
+                article.getShowComments(),
+                article.getCategory(),
+                article.getIsPublished()
         );
     }
 
     public Article toArticle(CreateArticleCommand command) {
-        return new Article(
-                Language.valueOf(command.getLanguage()),
-                command.getPic(),
-                command.getAlternativePic(),
-                command.getHeadline(),
-                command.getCaption(),
-                command.getContent(),
-                command.getShowComments()
-        );
+        return Article
+                .builder()
+                .language(Language.valueOf(command.getLanguage()))
+                .pic(command.getPic())
+                .alternativePic(command.getAlternativePic())
+                .headline(command.getHeadline())
+                .caption(command.getCaption())
+                .content(command.getContent())
+                .showComments(command.getShowComments())
+                .category(command.getCategory())
+                .isPublished(command.getIsPublished())
+                .build();
     }
 }

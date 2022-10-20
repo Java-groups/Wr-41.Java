@@ -36,9 +36,9 @@ public class SecurityConfig {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests(requests -> requests
-                .antMatchers(HttpMethod.POST,"/users").permitAll()
-                //TODO: change authority to ADMIN, USER is for testing purposes
-                .antMatchers(HttpMethod.GET,"/users").hasAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/users").hasAuthority("USER")
+                .antMatchers("/api/main/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/users/me").hasAuthority("USER")
                 .antMatchers("/").permitAll()
@@ -52,14 +52,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public void configure (AuthenticationManagerBuilder auth) throws Exception{
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
