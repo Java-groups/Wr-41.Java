@@ -7,19 +7,24 @@ import com.softserve.sportshub.article.domain.Language;
 import com.softserve.sportshub.article.dto.ArticleDto;
 import com.softserve.sportshub.article.dto.ArticleMapper;
 import com.softserve.sportshub.article.dto.CreateArticleCommand;
+import com.softserve.sportshub.category.model.Category;
+import com.softserve.sportshub.category.service.CategoryServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.when;
+
 
 class ArticleServiceImplTest {
 
     ArticleDao articleDao = new InMemoryArticleDao();
-
     ArticleMapper articleMapper = new ArticleMapper();
-
-    ArticleServiceImpl articleService = new ArticleServiceImpl(articleDao, articleMapper);
+    CategoryServiceImpl categoryService = Mockito.mock(CategoryServiceImpl.class);
+    ArticleServiceImpl articleService = new ArticleServiceImpl(articleDao, articleMapper, categoryService);
 
     @Test
     public void findArticleById() {
@@ -61,8 +66,13 @@ class ArticleServiceImplTest {
                         "Breaking news! We're testing our code!",
                         "caption",
                         "It's unbelievable but we do",
+                        1L,
+                        true,
                         true
                 );
+        Category category = givenCategory();
+        when(categoryService.getById(anyLong())).thenReturn(category);
+
         //when
         ArticleDto savedArticle = articleService.save(command);
 
@@ -72,15 +82,24 @@ class ArticleServiceImplTest {
     }
 
     private Article givenArticle(String headline) {
-        return articleDao.save(new Article(
-                Language.ENGLISH,
-                "picture.png",
-                "picture of picture",
-                headline,
-                "caption",
-                "It's unbelievable but we do",
-                true
-        ));
+        return articleDao.save(Article.builder()
+                .language(Language.ENGLISH)
+                .pic("picture.png")
+                .alternativePic("picture of picture")
+                .headline(headline)
+                .caption("caption")
+                .content("It's unbelievable but we do")
+                .isPublished(true)
+                .showComments(true)
+                .build()
+        );
+    }
+
+    private Category givenCategory() {
+        Category category = new Category();
+        category.setId(1L);
+        category.setName("NBA");
+        return category;
     }
 
 }
