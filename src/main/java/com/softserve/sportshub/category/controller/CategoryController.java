@@ -29,7 +29,6 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryService categoryService;
-    private final SubcategoryService subcategoryService;
 
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getAll() {
