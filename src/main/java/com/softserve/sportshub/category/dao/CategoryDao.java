@@ -5,6 +5,15 @@ import com.softserve.sportshub.category.model.Category;
 import java.util.List;
 
 public interface CategoryDao {
+    Category getById(long id);
+
+    List<Category> getAll();
+
     void save(Category category);
-    List<Category> list();
+
+    Category update(Category category);
+
+    void delete(Category category);
+
+    void deleteById(long id);
 }

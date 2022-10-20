@@ -1,6 +1,7 @@
 package com.softserve.sportshub.category.dao;
 
 import com.softserve.sportshub.category.model.Category;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,10 +10,22 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class CategoryDaoImpl implements CategoryDao{
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
+
+    @Override
+    public Category getById(long id) {
+        return sessionFactory.getCurrentSession().get(Category.class, id);
+    }
+
+    @Override
+    public List<Category> getAll() {
+        @SuppressWarnings("unchecked")
+        TypedQuery<Category> query = sessionFactory.getCurrentSession().createQuery("from Category ");
+        return query.getResultList();
+    }
 
     @Override
     public void save(Category category) {
@@ -20,9 +33,19 @@ public class CategoryDaoImpl implements CategoryDao{
     }
 
     @Override
-    public List<Category> list() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<Category> query = sessionFactory.getCurrentSession().createQuery("from Category ");
-        return query.getResultList();
+    public Category update(Category category) {
+        return (Category) sessionFactory.getCurrentSession().merge(category);
     }
+
+    @Override
+    public void delete(Category category) {
+        sessionFactory.getCurrentSession().delete(category);
+    }
+
+    @Override
+    public void deleteById(long id) {
+        Category category = getById(id);
+        delete(category);
+    }
+
 }
