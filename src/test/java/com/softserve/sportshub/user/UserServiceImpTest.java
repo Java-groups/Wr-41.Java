@@ -35,7 +35,7 @@ class UserServiceImpTest {
         //When
         roleService.save(userRole);
         UserDto savedUserDto = userService.save(inputUserData);
-        //Then
+//        //Then
         Assertions.assertThat(savedUserDto.getUsername()).isEqualTo(inputUserData.getUsername());
         Assertions.assertThat(savedUserDto.getPassword()).isEqualTo("hashedPassword");
     }
