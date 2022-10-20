@@ -59,7 +59,7 @@ public class CategoryController {
     }
 
     @PutMapping("/add-subcategory")
-    public ResponseEntity<StatusDto> addSubcategory(AddSubcategoryCommand command) {
+    public ResponseEntity<StatusDto> addSubcategory(@RequestBody AddSubcategoryCommand command) {
         Category category = categoryService.getById(command.getIdOfCategory());
         category.addSubcategory(new Subcategory("Example subcategory", category));
         categoryService.update(category);
