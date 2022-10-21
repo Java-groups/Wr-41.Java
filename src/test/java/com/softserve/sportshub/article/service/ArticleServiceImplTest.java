@@ -9,6 +9,7 @@ import com.softserve.sportshub.article.dto.ArticleMapper;
 import com.softserve.sportshub.article.dto.CreateArticleCommand;
 import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryServiceImpl;
+import com.softserve.sportshub.team.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -24,7 +25,8 @@ class ArticleServiceImplTest {
     ArticleDao articleDao = new InMemoryArticleDao();
     ArticleMapper articleMapper = new ArticleMapper();
     CategoryServiceImpl categoryService = Mockito.mock(CategoryServiceImpl.class);
-    ArticleServiceImpl articleService = new ArticleServiceImpl(articleDao, articleMapper, categoryService);
+    TeamDao teamDao = Mockito.mock(TeamDaoImpl.class);
+    ArticleServiceImpl articleService = new ArticleServiceImpl(articleDao, articleMapper, categoryService, teamDao);
 
     @Test
     public void findArticleById() {
@@ -67,10 +69,13 @@ class ArticleServiceImplTest {
                         "caption",
                         "It's unbelievable but we do",
                         1L,
+                        "team",
                         true,
                         true
                 );
         Category category = givenCategory();
+        Team team = givenTeam();
+        when(teamDao.findExactTeamByName("team")).thenReturn(team);
         when(categoryService.getById(anyLong())).thenReturn(category);
 
         //when
@@ -81,6 +86,12 @@ class ArticleServiceImplTest {
         assertEquals(command.getLanguage(), savedArticle.getLanguage());
     }
 
+    private Team givenTeam() {
+        Team team = new Team();
+        team.setTeamName("NBA");
+        return team;
+    }
+
     private Article givenArticle(String headline) {
         return articleDao.save(Article.builder()
                 .language(Language.ENGLISH)
@@ -89,6 +100,8 @@ class ArticleServiceImplTest {
                 .headline(headline)
                 .caption("caption")
                 .content("It's unbelievable but we do")
+                .team(givenTeam())
+                .category(givenCategory())
                 .isPublished(true)
                 .showComments(true)
                 .build()
