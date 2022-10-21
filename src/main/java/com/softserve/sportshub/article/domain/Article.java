@@ -2,6 +2,7 @@ package com.softserve.sportshub.article.domain;
 
 import com.softserve.sportshub.comment.domain.Comment;
 import com.softserve.sportshub.category.model.Category;
+import com.softserve.sportshub.team.Team;
 import com.softserve.sportshub.user.User;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -39,8 +40,11 @@ public class Article {
     @ManyToOne(fetch = FetchType.EAGER)
     private User owner;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Team team;
 
     @Override
     public boolean equals(Object o) {

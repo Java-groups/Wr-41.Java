@@ -8,6 +8,7 @@ import com.softserve.sportshub.article.dto.ArticleMapper;
 import com.softserve.sportshub.article.dto.CreateArticleCommand;
 import com.softserve.sportshub.category.model.Category;
 import com.softserve.sportshub.category.service.CategoryService;
+import com.softserve.sportshub.team.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ class ArticleServiceImpl implements ArticleService {
     private final ArticleDao articleDao;
     private final ArticleMapper articleMapper;
     private final CategoryService categoryService;
+    private final TeamDao teamDao;
 
     @Override
     public ArticleDto findById(Long id) {
@@ -40,6 +42,8 @@ class ArticleServiceImpl implements ArticleService {
     public ArticleDto save(CreateArticleCommand command) {
         Article article = articleMapper.toArticle(command);
         Category cat = categoryService.getById(command.getCategoryId());
+        Team team = teamDao.findExactTeamByName(command.getTeamName());
+        article.setTeam(team);
         article.setCategory(cat);
         return articleMapper.toDto(articleDao.save(article));
     }

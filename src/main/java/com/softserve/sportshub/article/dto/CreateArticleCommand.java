@@ -17,6 +17,7 @@ public class CreateArticleCommand {
     String caption;
     String content;
     Long categoryId;
+    String teamName;
     Boolean showComments;
     Boolean isPublished;
 }

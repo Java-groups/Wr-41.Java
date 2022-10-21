@@ -16,8 +16,10 @@ public class ArticleMapper {
                 article.getHeadline(),
                 article.getCaption(),
                 article.getContent(),
-                article.getShowComments(),
                 article.getCategory(),
+                article.getTeam(),
+                article.getComments(),
+                article.getShowComments(),
                 article.getIsPublished()
         );
     }
