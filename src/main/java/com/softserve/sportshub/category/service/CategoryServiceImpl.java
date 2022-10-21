@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
         return new CategoryDto(
                 category.getId(),
                 category.getName(),
-                category.getSubcategories()
+                category.getSubcategories().stream().map(Subcategory::getName).collect(Collectors.toList())
         );
     }
 
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.getAll().stream().map(
                 c -> new CategoryDto(c.getId(),
                         c.getName(),
-                        c.getSubcategories())
+                        c.getSubcategories().stream().map(Subcategory::getName).collect(Collectors.toList()))
         ).collect(Collectors.toList());
     }
 
