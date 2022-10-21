@@ -1,6 +1,8 @@
 package com.softserve.sportshub.category.dao;
 
+import com.softserve.sportshub.category.command.AddSubcategoryCommand;
 import com.softserve.sportshub.category.model.Category;
+import com.softserve.sportshub.subcategory.model.Subcategory;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,14 @@ public class CategoryDaoImpl implements CategoryDao{
     @Override
     public void save(Category category) {
         sessionFactory.getCurrentSession().save(category);
+    }
+
+    @Override
+    public void addSubcategory(AddSubcategoryCommand command) {
+        Category category = sessionFactory.getCurrentSession().get(Category.class, command.getIdOfCategory());
+        Subcategory subcategory = sessionFactory.getCurrentSession().get(Subcategory.class, command.getIdOfSubcategory());
+        category.addSubcategory(subcategory);
+        sessionFactory.getCurrentSession().merge(category);
     }
 
     @Override
