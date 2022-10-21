@@ -40,7 +40,6 @@ public class Category {
 
     public void addSubcategory(Subcategory subcategory) {
         subcategories.add(subcategory);
-        subcategory.setCategory(this);
     }
 
     @Override
@@ -48,12 +47,21 @@ public class Category {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
-        return id == category.id && Objects.equals(name, category.name) && Objects.equals(subcategories, category.subcategories);
+        return id == category.id && Objects.equals(name, category.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, subcategories);
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", subcategories=" + subcategories.stream().map(s -> s.getName()).reduce(" ", String::concat) +
+                '}';
     }
 
 }

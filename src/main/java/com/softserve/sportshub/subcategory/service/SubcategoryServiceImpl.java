@@ -23,7 +23,10 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     @Override
     public SubcategoryDto getDtoById(long id) {
         Subcategory subcategory = subcategoryDao.getById(id);
-        return new SubcategoryDto(subcategory.getId(), subcategory.getName(), subcategory.getCategory());
+        String categoryName = null;
+        if(subcategory.getCategory() != null)
+            categoryName = subcategory.getCategory().getName();
+        return new SubcategoryDto(subcategory.getId(), subcategory.getName(), categoryName);
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +41,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
         return subcategoryDao.getAll().stream().map(s -> new SubcategoryDto(
                 s.getId(),
                 s.getName(),
-                s.getCategory())
+                s.getCategory().getName())
         ).collect(Collectors.toList());
     }
 

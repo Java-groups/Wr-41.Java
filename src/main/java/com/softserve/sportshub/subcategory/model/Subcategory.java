@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class Subcategory {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name="category_id")
     private Category category;
 
     public Subcategory(String name, Category category) {
@@ -48,7 +50,16 @@ public class Subcategory {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category);
+        return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Subcategory{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category.getName() +
+                '}';
     }
 
 }

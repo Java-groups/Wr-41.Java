@@ -12,8 +12,6 @@ public interface CategoryDao {
 
     void save(Category category);
 
-    public void addSubcategory(AddSubcategoryCommand command);
-
     Category update(Category category);
 
     void delete(Category category);

@@ -68,13 +68,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public void addSubcategory(AddSubcategoryCommand command) {
-//        Category category = getEntityById(command.getIdOfCategory());
-//        Subcategory subcategory = subcategoryDao.getById(command.getIdOfSubcategory());
-//
-//        if (!category.getSubcategories().contains(subcategory)) {
-//            //category.addSubcategory(subcategory);
-            categoryDao.addSubcategory(command);
-//        }
+        Category category = getEntityById(command.getIdOfCategory());
+        Subcategory subcategory = subcategoryDao.getById(command.getIdOfSubcategory());
+
+        if(!category.getSubcategories().contains(subcategory)) {
+            subcategory.setCategory(category);
+            category.addSubcategory(subcategory);
+        }
     }
 
     @Transactional

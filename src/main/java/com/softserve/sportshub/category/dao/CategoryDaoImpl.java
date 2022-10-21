@@ -33,13 +33,6 @@ public class CategoryDaoImpl implements CategoryDao{
         sessionFactory.getCurrentSession().save(category);
     }
 
-    @Override
-    public void addSubcategory(AddSubcategoryCommand command) {
-        Category category = sessionFactory.getCurrentSession().get(Category.class, command.getIdOfCategory());
-        Subcategory subcategory = sessionFactory.getCurrentSession().get(Subcategory.class, command.getIdOfSubcategory());
-        category.addSubcategory(subcategory);
-        sessionFactory.getCurrentSession().merge(category);
-    }
 
     @Override
     public Category update(Category category) {

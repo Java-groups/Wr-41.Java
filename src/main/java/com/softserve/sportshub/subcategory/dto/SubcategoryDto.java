@@ -1,7 +1,9 @@
 package com.softserve.sportshub.subcategory.dto;
 
-import com.softserve.sportshub.category.model.Category;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +15,6 @@ public class SubcategoryDto {
 
     private String name;
 
-    private Category category;
+    private String category;
 
 }
