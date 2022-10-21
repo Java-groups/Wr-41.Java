@@ -3,6 +3,7 @@ package com.softserve.sportshub.user;
 import com.softserve.sportshub.role.Role;
 import com.softserve.sportshub.role.RoleDao;
 import com.softserve.sportshub.user.dto.UserDto;
+import com.softserve.sportshub.user.dto.UserDtoUpdates;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -74,6 +75,18 @@ public class UserServiceImp implements UserService, UserDetailsService {
       User user = getCurrentUser();
       if(passwordEncoder.matches(currentPassword, user.getPassword())){
          user.setPassword(passwordEncoder.encode(newPassword));
+      }
+      return UserDto.mapUserToDto(user);
+   }
+
+   @Override
+   public UserDto updateUser(UserDtoUpdates updates) throws UserPrincipalNotFoundException {
+      User user = getCurrentUser();
+      if (updates.getFirstName().length() != 0){
+         user.setFirstName(updates.getFirstName());
+      }
+      if(updates.getLastName().length() != 0){
+         user.setLastName(updates.getLastName());
       }
       return UserDto.mapUserToDto(user);
    }

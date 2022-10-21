@@ -28,7 +28,7 @@ class UserServiceImpTest {
     @Test
     public void shouldCreateUserTest(){
         //Given
-        UserDto inputUserData = new UserDto(null, "Karol", "myPass123", false, false);
+        UserDto inputUserData = new UserDto(null, "karolusername", "Karol", "Malicki", "myPass123", false, false);
         Role userRole = new Role("USER");
 
         Mockito.when(passwordEncoder.encode(any())).thenReturn("hashedPassword");
