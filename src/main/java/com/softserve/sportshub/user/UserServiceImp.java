@@ -92,6 +92,12 @@ public class UserServiceImp implements UserService, UserDetailsService {
    }
 
    @Override
+   public void removeUserById(Long id) {
+      User user = userDao.findUserById(id);
+      userDao.removeUser(user);
+   }
+
+   @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
       User user = userDao.findByUsername(username);
       if(user == null){

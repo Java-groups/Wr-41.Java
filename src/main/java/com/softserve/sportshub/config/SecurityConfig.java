@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority("USER")
                 .antMatchers("/login").permitAll()
                 .antMatchers(HttpMethod.PATCH, "/users/me/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.DELETE, "/users/**").hasAuthority("ADMIN")
                 .antMatchers("/").permitAll()
                 .anyRequest().permitAll()
         );

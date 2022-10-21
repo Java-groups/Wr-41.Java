@@ -27,4 +27,14 @@ public class InMemoryUserDao implements UserDao{
     public User findByUsername(String username) {
         return null;
     }
+
+    @Override
+    public User findUserById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void removeUser(User user) {
+        return;
+    }
 }

@@ -2,6 +2,7 @@ package com.softserve.sportshub.user;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -31,5 +32,17 @@ public class UserDaoImp implements UserDao {
       TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("select u from User u where u.username = :username");
       query.setParameter("username", username);
       return query.getSingleResult();
+   }
+
+   @Override
+   public User findUserById(Long id) {
+      TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("select u from User u where u.id = :id");
+      query.setParameter("id", id);
+      return query.getSingleResult();
+   }
+
+   @Override
+   public void removeUser(User user) {
+      sessionFactory.getCurrentSession().remove(user);
    }
 }

@@ -38,6 +38,14 @@ class UserServiceImpTest {
 //        //Then
         Assertions.assertThat(savedUserDto.getUsername()).isEqualTo(inputUserData.getUsername());
         Assertions.assertThat(savedUserDto.getPassword()).isEqualTo("hashedPassword");
+
+        //Clean
+//        userDao.
     }
 
+    public void shouldGetUserByIdTest(){
+        //Given
+        Long id = 1L;
+
+    }
 }

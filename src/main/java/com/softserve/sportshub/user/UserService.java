@@ -13,4 +13,5 @@ public interface UserService {
    void addRoleToUser(String username, String roleName);
    UserDto changeUserPassword(String currentPassword, String newPassword, String newPasswordRepeat) throws Exception;
    UserDto updateUser(UserDtoUpdates updates) throws UserPrincipalNotFoundException;
+   void removeUserById(Long id);
 }

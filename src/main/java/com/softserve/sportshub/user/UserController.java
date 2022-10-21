@@ -5,6 +5,8 @@ import com.softserve.sportshub.role.RoleService;
 import com.softserve.sportshub.user.dto.UserDto;
 import com.softserve.sportshub.user.dto.UserDtoUpdates;
 import com.softserve.sportshub.user.dto.UserPasswordDto;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -69,5 +71,11 @@ public class UserController {
   public ResponseEntity<UserDto> updateUserProfile(@RequestBody UserDtoUpdates updates) throws UserPrincipalNotFoundException {
     UserDto updatedUser = userService.updateUser(updates);
     return ResponseEntity.ok().body(updatedUser);
+  }
+
+  @DeleteMapping("/users/{id}")
+  public ResponseEntity<?> removeUserById(@PathVariable Long id){
+    userService.removeUserById(id);
+    return ResponseEntity.ok().build();
   }
 }
