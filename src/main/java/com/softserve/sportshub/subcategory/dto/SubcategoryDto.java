@@ -1,8 +1,18 @@
 package com.softserve.sportshub.subcategory.dto;
 
-import lombok.Value;
+import com.softserve.sportshub.category.model.Category;
+import lombok.*;
 
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class SubcategoryDto {
+
+    private long id;
+
     private String name;
+
+    private Category category;
+
 }

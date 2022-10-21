@@ -9,6 +9,7 @@ import com.softserve.sportshub.subcategory.dao.SubcategoryDao;
 import com.softserve.sportshub.subcategory.model.Subcategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceImpl implements CategoryService{
+@EnableTransactionManagement
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryDao categoryDao;
     private final SubcategoryDao subcategoryDao;
@@ -25,7 +27,11 @@ public class CategoryServiceImpl implements CategoryService{
     @Override
     public CategoryDto getDtoById(long id) {
         Category category = getEntityById(id);
-        return new CategoryDto(category.getName());
+        return new CategoryDto(
+                category.getId(),
+                category.getName(),
+                category.getSubcategories()
+        );
     }
 
     @Transactional(readOnly = true)
@@ -37,7 +43,11 @@ public class CategoryServiceImpl implements CategoryService{
     @Transactional(readOnly = true)
     @Override
     public List<CategoryDto> getAll() {
-        return categoryDao.getAll().stream().map(c -> new CategoryDto(c.getName())).collect(Collectors.toList());
+        return categoryDao.getAll().stream().map(
+                c -> new CategoryDto(c.getId(),
+                        c.getName(),
+                        c.getSubcategories())
+        ).collect(Collectors.toList());
     }
 
     @Transactional
@@ -55,13 +65,15 @@ public class CategoryServiceImpl implements CategoryService{
         return categoryDao.update(category);
     }
 
+    @Transactional
     @Override
     public void addSubcategory(AddSubcategoryCommand command) {
         Category category = getEntityById(command.getIdOfCategory());
         Subcategory subcategory = subcategoryDao.getById(command.getIdOfSubcategory());
 
-        if(!category.getSubcategories().contains(subcategory))
+        if (!category.getSubcategories().contains(subcategory)) {
             category.addSubcategory(subcategory);
+        }
 
         categoryDao.update(category);
     }

@@ -6,6 +6,7 @@ import com.softserve.sportshub.subcategory.dto.SubcategoryDto;
 import com.softserve.sportshub.subcategory.model.Subcategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@EnableTransactionManagement
 public class SubcategoryServiceImpl implements SubcategoryService {
 
     private final SubcategoryDao subcategoryDao;
@@ -21,7 +23,7 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     @Override
     public SubcategoryDto getDtoById(long id) {
         Subcategory subcategory = subcategoryDao.getById(id);
-        return new SubcategoryDto(subcategory.getName());
+        return new SubcategoryDto(subcategory.getId(), subcategory.getName(), subcategory.getCategory());
     }
 
     @Transactional(readOnly = true)
@@ -33,7 +35,11 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     @Transactional(readOnly = true)
     @Override
     public List<SubcategoryDto> getAll() {
-        return subcategoryDao.getAll().stream().map(s -> new SubcategoryDto(s.getName())).collect(Collectors.toList());
+        return subcategoryDao.getAll().stream().map(s -> new SubcategoryDto(
+                s.getId(),
+                s.getName(),
+                s.getCategory())
+        ).collect(Collectors.toList());
     }
 
     @Transactional

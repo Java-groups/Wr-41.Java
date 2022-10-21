@@ -38,6 +38,7 @@ public class Category {
 
     public void addSubcategory(Subcategory subcategory) {
         subcategories.add(subcategory);
+        subcategory.setCategory(this);
     }
 
     @Override
